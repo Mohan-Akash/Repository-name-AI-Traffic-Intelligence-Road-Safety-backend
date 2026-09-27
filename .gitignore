@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Databases
+*.db
+
+# ML artifacts
+*.pt
+*.onnx
+runs/
+traffic_training/
+traffic_tracking/
+
+# Videos
+*.mp4
+*.avi
+*.mov
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
