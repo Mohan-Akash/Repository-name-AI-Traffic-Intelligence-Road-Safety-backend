@@ -63,11 +63,18 @@ def convert_to_browser_mp4(
     input_video: str | Path,
     output_video: str | Path
 ):
-    ffmpeg_path = (
+    # Windows: use installed FFmpeg path
+    windows_ffmpeg = (
         r"C:\Users\MOHAN AKASH\AppData\Local\Microsoft\WinGet\Packages"
         r"\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe"
         r"\ffmpeg-9.0.2-full_build\bin\ffmpeg.exe"
     )
+
+    # Linux / Render: FFmpeg is available as "ffmpeg"
+    if Path(windows_ffmpeg).exists():
+        ffmpeg_path = windows_ffmpeg
+    else:
+        ffmpeg_path = "ffmpeg"
 
     command = [
         ffmpeg_path,
