@@ -5,7 +5,7 @@ from ultralytics import YOLO
 import subprocess
 from .analytics import TrafficAnalytics
 from .api_client import save_vehicle
-
+from huggingface_hub import hf_hub_download
 
 # --------------------------------------------------
 # PATHS
@@ -14,6 +14,9 @@ from .api_client import save_vehicle
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 MODEL_PATH = PROJECT_ROOT / "models" / "best.pt"
+
+HF_REPO = "akash-48/AI-Traffic-Intelligence-YOLO"
+HF_FILENAME = "best.pt"
 
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -33,11 +36,25 @@ MIN_TRACK_FRAMES = 15
 
 print("Loading trained YOLO model...")
 
+if MODEL_PATH.exists():
+    print("Using local model:", MODEL_PATH)
+else:
+    print("Local model not found.")
+    print("Downloading model from Hugging Face...")
+
+    MODEL_PATH = Path(
+        hf_hub_download(
+            repo_id=HF_REPO,
+            filename=HF_FILENAME
+        )
+    )
+
+    print("Downloaded model:", MODEL_PATH)
+
 model = YOLO(str(MODEL_PATH))
 
 print("Model loaded successfully.")
 print("Classes:", model.names)
-
 # --------------------------------------------------
 # CONVERT VIDEO FOR BROWSER PLAYBACK
 # --------------------------------------------------

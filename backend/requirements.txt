@@ -5,3 +5,5 @@ pydantic
 ultralytics
 opencv-python
 python-multipart
+huggingface_hub
+requests
